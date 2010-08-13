@@ -24,8 +24,12 @@ set wildignore+=*.o,*.obj,.git,*.rbc
 " Status bar
 set laststatus=2
 
+" My Map Leader
+let mapleader = ","
+
 " NERDTree configuration
 let NERDTreeIgnore=['\.rbc$', '\~$']
+map <Leader>n :NERDTreeToggle <CR>
 
 " CTags
 map <Leader>rt :!ctags --extra=+f -R *<CR><CR>
@@ -72,3 +76,6 @@ set modelines=10
 if filereadable(expand("~/.vimrc.local"))
   source ~/.vimrc.local
 endif
+
+colorscheme vividchalk
+map <Leader>p <C-^> " Go to previous file

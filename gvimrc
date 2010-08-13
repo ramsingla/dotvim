@@ -2,6 +2,8 @@
 set fuoptions=maxhorz,maxvert
 
 if has("gui_macvim")
+  set guioptions-=T  " remove toolbar
+  set guifont=Monaco:h15
   " Apple-T for CommandT
   macmenu &File.New\ Tab key=<nop>
   map <D-t> :CommandT<CR>
