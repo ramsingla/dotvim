@@ -18,20 +18,36 @@ def vim_plugin_task(name, repo=nil)
         if repo =~ /git$/
           sh "git clone #{repo} #{dir}"
 
-        elsif repo =~ /download_script/ # TODO: this assumes all vimscripts downloads are zips (can be vba or targz)
-          sh "curl #{repo} > #{dir}.zip"
-          sh "unzip -o #{dir}.zip -d #{dir}"
+        elsif repo =~ /download_script/
+          if filename = `curl --silent --head #{repo} | grep attachment`[/filename=(.+)/,1]
+            filename.strip!
+            sh "curl #{repo} > tmp/#{filename}"
+          else
+            raise ArgumentError, 'unable to determine script type'
+          end
 
-        elsif repo =~ /tar\.gz$/
+        elsif repo =~ /(tar|gz|vba|zip)$/
           filename = File.basename(repo)
-          dirname  = File.basename(filename, '.tar.gz')
-
           sh "curl #{repo} > tmp/#{filename}"
-          sh "tar zxvf tmp/#{filename}"
-          sh "mv #{dirname} #{dir}"
 
         else
           raise ArgumentError, 'unrecognized source url for plugin'
+        end
+
+        case filename
+        when /zip$/
+          sh "unzip -o tmp/#{filename} -d #{dir}"
+
+        when /tar\.gz$/
+          dirname  = File.basename(filename, '.tar.gz')
+
+          sh "tar zxvf tmp/#{filename}"
+          sh "mv #{dirname} #{dir}"
+
+        when /vba(\.gz)?$/
+          system "vim -c 'so %' -c 'q' tmp/#{filename}"
+          rm "tmp/#{File.basename(filename, '.gz')}" if filename =~ /gz$/
+          mkdir_p dir # TODO: hax, this needs to exist for :install task later
         end
       end
 
@@ -89,14 +105,25 @@ vim_plugin_task "javascript",       "http://github.com/pangloss/vim-javascript.g
 vim_plugin_task "markdown",         "http://github.com/tpope/vim-markdown.git"
 vim_plugin_task "markdown_preview", "http://github.com/robgleeson/vim-markdown-preview.git"
 vim_plugin_task "nerdtree",         "http://github.com/scrooloose/nerdtree.git"
+vim_plugin_task "nerdcommenter",    "http://github.com/scrooloose/nerdcommenter.git"
 vim_plugin_task "surround",         "http://github.com/tpope/vim-surround.git"
 vim_plugin_task "taglist",          "http://vim.sourceforge.net/scripts/download_script.php?src_id=7701"
 vim_plugin_task "vividchalk",       "http://github.com/tpope/vim-vividchalk.git"
+vim_plugin_task "supertab",         "http://github.com/ervandew/supertab.git"
+vim_plugin_task "cucumber",         "http://github.com/tpope/vim-cucumber.git"
+vim_plugin_task "textile",          "http://github.com/timcharper/textile.vim.git"
+vim_plugin_task "rails",            "http://github.com/tpope/vim-rails.git"
+vim_plugin_task "rspec",            "http://github.com/taq/vim-rspec.git"
+vim_plugin_task "zoomwin",          "http://www.vim.org/scripts/download_script.php?src_id=9865"
 
 vim_plugin_task "command_t",        "http://github.com/wincent/Command-T.git" do
   sh "find ruby -name '.gitignore' | xargs rm"
   Dir.chdir "ruby/command-t" do
-    sh "rvm system ruby extconf.rb"
+    if `rvm > /dev/null 2>&1` && $?.exitstatus == 1
+      sh "rvm system ruby extconf.rb"
+    else
+      sh "/usr/bin/ruby extconf.rb" # assume /usr/bin/ruby is system ruby
+    end
     sh "make clean && make"
   end
 end
@@ -104,13 +131,13 @@ end
 vim_plugin_task "janus_themes" do
   # custom version of railscasts theme
   File.open(File.expand_path("../colors/railscasts+.vim", __FILE__), "w") do |file|
-    file.puts <<-VIM.gsub(/^      /, "")
+    file.puts <<-VIM.gsub(/^ +/, "").gsub("<SP>", " ")
       runtime colors/railscasts.vim
       let g:colors_name = "railscasts+"
 
-      set fillchars=vert:\\ 
-      set fillchars=stl:\\ 
-      set fillchars=stlnc:\\ 
+      set fillchars=vert:\\<SP>
+      set fillchars=stl:\\<SP>
+      set fillchars=stlnc:\\<SP>
       hi  StatusLine guibg=#cccccc guifg=#000000
       hi  VertSplit  guibg=#dddddd
     VIM
@@ -127,6 +154,10 @@ vim_plugin_task "janus_themes" do
       hi  StatusLineNC guibg=#888888 guifg=#000000
     VIM
   end
+end
+
+vim_plugin_task "molokai" do
+  sh "curl http://www.vim.org/scripts/download_script.php?src_id=9750 > colors/molokai.vim"
 end
 
 vim_plugin_task "mustasche" do

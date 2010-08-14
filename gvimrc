@@ -2,23 +2,30 @@
 set fuoptions=maxhorz,maxvert
 
 if has("gui_macvim")
-  set guioptions-=T  " remove toolbar
-  set guifont=Monaco:h15
-  " Apple-T for CommandT
+  " Command-T for CommandT
   macmenu &File.New\ Tab key=<nop>
   map <D-t> :CommandT<CR>
 
-  " Apple-Shift-F for Ack
+  " Command-Shift-F for Ack
   macmenu Window.Toggle\ Full\ Screen\ Mode key=<nop>
   map <D-F> :Ack<space>
 
-  " Apple-e for ConqueTerm
+  " Command-e for ConqueTerm
   map <D-e> :call StartTerm()<CR>
+
+  " Command-/ to toggle comments
+  map <D-/> <plug>NERDCommenterToggle<CR>
 endif
+
+" Start without the toolbar
+set guioptions-=T
+
+" Default gui color scheme
+color molokai
 
 " ConqueTerm wrapper
 function StartTerm()
-  ConqueTerm bash --login
+  execute 'ConqueTerm ' . $SHELL . ' --login'
   setlocal listchars=tab:\ \ 
 endfunction
 

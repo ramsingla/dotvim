@@ -29,7 +29,13 @@ let mapleader = ","
 
 " NERDTree configuration
 let NERDTreeIgnore=['\.rbc$', '\~$']
-map <Leader>n :NERDTreeToggle <CR>
+map <Leader>n :NERDTreeToggle<CR>
+
+" Command-T configuration
+let g:CommandTMaxHeight=20
+
+" ZoomWin configuration
+map <Leader>z :ZoomWin<CR>
 
 " CTags
 map <Leader>rt :!ctags --extra=+f -R *<CR><CR>
@@ -45,7 +51,7 @@ au FileType make                                     set noexpandtab
 au FileType python                                   set noexpandtab
 
 " Thorfile, Rakefile and Gemfile are Ruby
-au BufRead,BufNewFile {Gemfile,Rakefile,Thorfile}    set ft=ruby
+au BufRead,BufNewFile {Gemfile,Rakefile,Thorfile,config.ru}    set ft=ruby
 
 " md, markdown, and mk are markdown and define buffer-local preview
 au BufRead,BufNewFile *.{md,markdown,mdown,mkd,mkdn} map <buffer> <Leader>p :Mm <CR>
@@ -71,6 +77,9 @@ cmap <C-P> <C-R>=expand("%:p:h") . "/" <CR>
 " Use modeline overrides
 set modeline
 set modelines=10
+
+" Default color scheme
+color desert
 
 " Include user's local vim config
 if filereadable(expand("~/.vimrc.local"))

@@ -24,6 +24,27 @@ to the issue tracker.
 
 To update to the latest version of the distribution, just run `rake` again inside your `~/.vim` directory.
 
+# Intro to VIM
+
+Here's some tips if you've never used VIM before:
+
+## Tutorial
+
+* Type `vimtutor` into a shell to go through a brief interactive tutorial inside VIM.
+
+## Modes
+
+* VIM has two modes:
+  * insert mode- stuff you type is added to the buffer
+  * normal mode- keys you hit are interpretted as commands
+* To enter insert mode, hit `i`
+* To exit insert mode, hit `<ESC>`
+
+## Useful commands
+
+* Use `:q` to exit vim
+* Certain commands are prefixed with a `<Leader>` key, which maps to `\` by default. Use `let mapleader = ","` to change this.
+
 # Features
 
 This vim distribution includes a number of packages built by others.
@@ -46,11 +67,12 @@ Janus ships with a number of basic customizations for vim:
 
 ## "Project Drawer" aka NERDTree
 
-NERDTree is a file explorer plugin that provides "project drawer" functionality to your vim projects. 
+NERDTree is a file explorer plugin that provides "project drawer" functionality to your vim projects.
 You can learn more about it with :help NERDTree.
 
 **Customizations**: Janus adds a number of customizations to the core NERDTree:
 
+* Use `<Leader>n` to toggle NERDTree
 * Ignore `*.rbc` and `*~` files
 * Automatically activate NERDTree when MacVIM opens and make the original buffer the active one
 * Provide alternative :e, :cd, :rm and :touch abbreviations which also refresh NERDTree when done
@@ -74,7 +96,7 @@ Command-T provides a mechanism for searching for a file inside the current worki
 behaves similarly to command-t in Textmate.
 
 **Customizations**: Janus rebinds command-t (`<D-t>`) to bring up this plugin. It defaults to
-\<Leader\>t.
+`<Leader>t`.
 
 ## ConqueTerm
 
@@ -102,11 +124,27 @@ cursor was inside `"foo bar"`, you could type `cs"'` to convert the text to `'fo
 
 There's a lot more; check it out at `:help surround`
 
-## Taglist
+## NERDCommenter
 
-`:Tlist` brings up an overview panel that lists all ctags for easy navigation.
+NERDCommenter allows you to wrangle your code comments, regardless of filetype. View `help :NERDCommenter`
+for all the details.
+
+**Customizations**: Janus binds command-/ (`<D-/>`) to toggle comments.
+
+## SuperTab
+
+In insert mode, start typing something and hit `<TAB>` to tab-complete based on the current context.
+
+## ctags
+
+Janus includes the TagList plugin, which binds `:Tlist` to an overview panel that lists all ctags for easy navigation.
 
 **Customizations**: Janus binds `<Leader>rt` to the ctags command to update tags.
+
+**Note**: For full language support, run `brew install ctags` to install exuberant-ctags.
+
+**Tip**: Check out `:help ctags` for information about VIM's built-in ctag support. Tag navigation creates a stack which can
+traversed via `Ctrl-]` (to find the source of a token) and `Ctrl-T` (to jump back up one level).
 
 ## Git Support (Fugitive)
 
@@ -116,14 +154,20 @@ Fugitive adds pervasive git support to git directories in vim. For more informat
 Use `:Gstatus` to view `git status` and type `-` on any file to stage or unstage it. Type `p` on
 a file to enter `git add -p` and stage specific hunks in the file.
 
-Use `:Gdiff` on an open file to see what changes have been made to that file 
+Use `:Gdiff` on an open file to see what changes have been made to that file
+
+## ZoomWin
+
+When working with split windows, ZoomWin lets you zoom into a window and out again using `Ctrl-W o`
+
+**Customizations**: Janus binds `<Leader>z` to `:ZoomWin`
 
 ## Markdown Preview
 
 Markdown preview takes the current buffer, converts the Markdown to HTML, and opens it in your
 default browser.
 
-**Customizations**: Janus binds \<Leader\>p to this plugin.
+**Customizations**: Janus binds `<Leader>p` to this plugin.
 
 ## Additional Syntaxes
 
@@ -155,10 +199,10 @@ Use `:color vibrantink` to switch to a color scheme.
 Janus also has a few customized versions of popular themes:
 
 * jellybeans+
+* molokai
 * railscasts+
 
 To set a color scheme, update your local vimrc files:
 
     echo color desert > ~/.vimrc.local
     echo color jellybeans+ > ~/.gvimrc.local
-
