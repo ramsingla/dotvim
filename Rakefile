@@ -115,6 +115,20 @@ vim_plugin_task "textile",          "http://github.com/timcharper/textile.vim.gi
 vim_plugin_task "rails",            "http://github.com/tpope/vim-rails.git"
 vim_plugin_task "rspec",            "http://github.com/taq/vim-rspec.git"
 vim_plugin_task "zoomwin",          "http://www.vim.org/scripts/download_script.php?src_id=9865"
+vim_plugin_task "snipmate.vim",     "http://github.com/msanders/snipmate.vim.git" do
+  cwd = File.expand_path("../", __FILE__)
+  other_dirs = %w[ after snippets ]
+  other_dirs.each { |d| mkdir_p d }
+
+  Dir.chdir "tmp/snipmate.vim" do
+    other_dirs.each do |subdir|
+      if File.exists?(subdir)
+        sh "cp -rf #{subdir}/* #{cwd}/#{subdir}/"
+      end
+    end
+  end
+
+end
 
 vim_plugin_task "command_t",        "http://github.com/wincent/Command-T.git" do
   sh "find ruby -name '.gitignore' | xargs rm"

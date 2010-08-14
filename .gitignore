@@ -11,3 +11,5 @@ ftplugin
 syntax
 colors
 autoload
+snippets
+after
