@@ -1,5 +1,5 @@
 module VIM
-  Dirs = %w[ autoload doc plugin ruby syntax ftdetect ftplugin colors indent ]
+  Dirs = %w[ after autoload doc plugin ruby snippets syntax ftdetect ftplugin colors indent ]
 end
 
 directory "tmp"
@@ -102,7 +102,6 @@ vim_plugin_task "fugitive",         "http://github.com/tpope/vim-fugitive.git"
 vim_plugin_task "haml",             "http://github.com/tpope/vim-haml.git"
 vim_plugin_task "indent_object",    "http://github.com/michaeljsmith/vim-indent-object.git"
 vim_plugin_task "javascript",       "http://github.com/pangloss/vim-javascript.git"
-vim_plugin_task "markdown",         "http://github.com/tpope/vim-markdown.git"
 vim_plugin_task "markdown_preview", "http://github.com/robgleeson/vim-markdown-preview.git"
 vim_plugin_task "nerdtree",         "http://github.com/scrooloose/nerdtree.git"
 vim_plugin_task "nerdcommenter",    "http://github.com/scrooloose/nerdcommenter.git"
@@ -115,19 +114,17 @@ vim_plugin_task "textile",          "http://github.com/timcharper/textile.vim.gi
 vim_plugin_task "rails",            "http://github.com/tpope/vim-rails.git"
 vim_plugin_task "rspec",            "http://github.com/taq/vim-rspec.git"
 vim_plugin_task "zoomwin",          "http://www.vim.org/scripts/download_script.php?src_id=9865"
-vim_plugin_task "snipmate.vim",     "http://github.com/msanders/snipmate.vim.git" do
-  cwd = File.expand_path("../", __FILE__)
-  other_dirs = %w[ after snippets ]
-  other_dirs.each { |d| mkdir_p d }
+vim_plugin_task "snipmate",         "http://github.com/msanders/snipmate.vim.git"
 
-  Dir.chdir "tmp/snipmate.vim" do
-    other_dirs.each do |subdir|
-      if File.exists?(subdir)
-        sh "cp -rf #{subdir}/* #{cwd}/#{subdir}/"
-      end
-    end
+vim_plugin_task "markdown",         "http://github.com/tpope/vim-markdown.git" do
+  File.open("ftplugin/markdown.vim", "a") do |f|
+    f.puts <<-VIM.gsub(/^ +/, "")
+      " Set word wrapping
+      :set wrap
+      :set wm=2
+      :set textwidth=72
+    VIM
   end
-
 end
 
 vim_plugin_task "command_t",        "http://github.com/wincent/Command-T.git" do
