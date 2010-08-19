@@ -53,7 +53,7 @@ function s:setupWrapping()
 endfunction
 
 function s:setupMarkup()
-  call s:setupMarkup()
+  call s:setupWrapping()
   map <buffer> <Leader>p :Mm <CR>
 endfunction
 
