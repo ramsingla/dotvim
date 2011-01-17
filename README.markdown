@@ -1,4 +1,8 @@
-# Janus: Carlhuda's vim Distribution
+# dotvim: Easy MacVim Distribution
+
+This is a fork of Janus. It has been tailored to needs
+
+## Janus: Carlhuda's vim Distribution
 
 This is a basic distribution of vim plugins and tools intended to be run
 on top of the latest MacVIM snapshot.

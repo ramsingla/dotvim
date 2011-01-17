@@ -16,7 +16,7 @@ if has("gui_macvim")
   map <D-e> :call StartTerm()<CR>
 
   " Command-/ to toggle comments
-  map <D-/> <plug>NERDCommenterToggle<CR>
+  map <D-/> <C-_><C-_>
 
   " Command-][ to increase/decrease indentation
   vmap <D-]> >gv
@@ -27,7 +27,7 @@ endif
 set guioptions-=T
 
 " Default gui color scheme
-color ir_black
+" color ir_black
 
 " ConqueTerm wrapper
 function StartTerm()

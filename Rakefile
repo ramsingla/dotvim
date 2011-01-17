@@ -131,7 +131,7 @@ vim_plugin_task "javascript",       "git://github.com/pangloss/vim-javascript.gi
 vim_plugin_task "jslint",           "git://github.com/hallettj/jslint.vim.git"
 vim_plugin_task "markdown_preview", "git://github.com/robgleeson/vim-markdown-preview.git"
 vim_plugin_task "nerdtree",         "git://github.com/wycats/nerdtree.git"
-vim_plugin_task "nerdcommenter",    "git://github.com/scrooloose/nerdcommenter.git"
+#vim_plugin_task "nerdcommenter",    "git://github.com/scrooloose/nerdcommenter.git"
 vim_plugin_task "surround",         "git://github.com/tpope/vim-surround.git"
 vim_plugin_task "taglist",          "http://vim.sourceforge.net/scripts/download_script.php?src_id=7701"
 vim_plugin_task "vividchalk",       "git://github.com/tpope/vim-vividchalk.git"
@@ -139,7 +139,7 @@ vim_plugin_task "supertab",         "git://github.com/ervandew/supertab.git"
 vim_plugin_task "cucumber",         "git://github.com/tpope/vim-cucumber.git"
 vim_plugin_task "textile",          "git://github.com/timcharper/textile.vim.git"
 vim_plugin_task "rails",            "git://github.com/tpope/vim-rails.git"
-vim_plugin_task "rspec",            "git://github.com/taq/vim-rspec.git"
+#vim_plugin_task "rspec",            "git://github.com/taq/vim-rspec.git"
 vim_plugin_task "zoomwin",          "http://www.vim.org/scripts/download_script.php?src_id=9865"
 vim_plugin_task "snipmate",         "git://github.com/msanders/snipmate.vim.git"
 vim_plugin_task "markdown",         "git://github.com/tpope/vim-markdown.git"
@@ -148,9 +148,14 @@ vim_plugin_task "unimpaired",       "git://github.com/tpope/vim-unimpaired.git"
 vim_plugin_task "searchfold",       "git://github.com/vim-scripts/searchfold.vim.git"
 vim_plugin_task "irblack",          "git://github.com/wgibbs/vim-irblack.git"
 vim_plugin_task "scratch",          "http://github.com/duff/vim-scratch.git"
+vim_plugin_task "lusty",            "git://github.com/sjbach/lusty.git"
+vim_plugin_task "specky",           "git://github.com/vim-scripts/Specky.git"
+vim_plugin_task "vimrake",             "git://github.com/tpope/vim-rake.git"
+vim_plugin_task "ragtag",           "git://github.com/tpope/vim-ragtag.git"
+vim_plugin_task "matchit",          "git://github.com/vim-scripts/matchit.zip.git"
+vim_plugin_task "tcomment",         "git://github.com/tsaleh/vim-tcomment.git"
 
 vim_plugin_task "command_t",        "git://github.com/wincent/Command-T.git" do
-
   sh "find ruby -name '.gitignore' | xargs rm"
   Dir.chdir "ruby/command-t" do
     if `rvm > /dev/null 2>&1` && $?.exitstatus == 0
