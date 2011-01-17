@@ -26,6 +26,10 @@ report an issue to the issue tracker.
 2. `cd ~/.vim`
 3. `rake`
 
+or
+
+  `curl https://github.com/carlhuda/janus/raw/master/bootstrap.sh -o - | sh`
+
 ## Updating to the latest version
 
 To update to the latest version of the distribution, just run `rake`
@@ -107,6 +111,13 @@ You can learn more about it with :help Ack
 
 **Customizations**: Janus rebinds command-shift-f (`<D-F>`) to bring up
 `:Ack `.
+
+## Align
+
+Align lets you align statements on their equal signs, make comment
+boxes, align comments, align declarations, etc.
+
+* `:5,10Align =>` to align lines 5-10 on `=>`'s
 
 ## Command-T
 

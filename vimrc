@@ -8,6 +8,7 @@ syntax on
 set nowrap
 set tabstop=2
 set shiftwidth=2
+set softtabstop=2
 set expandtab
 set list listchars=tab:\ \ ,trail:·
 
@@ -27,6 +28,11 @@ set laststatus=2
 " My Map Leader
 let mapleader = ","
 
+" Without setting this, ZoomWin restores windows in a way that causes
+" equalalways behavior to be triggered the next time CommandT is used.
+" This is likely a bludgeon to solve some other issue, but it works
+set noequalalways
+
 " NERDTree configuration
 let NERDTreeIgnore=['\.rbc$', '\~$']
 map <Leader>n :NERDTreeToggle<CR>
@@ -35,7 +41,7 @@ map <Leader>n :NERDTreeToggle<CR>
 let g:CommandTMaxHeight=20
 
 " ZoomWin configuration
-map <Leader>z :ZoomWin<CR>
+map <Leader><Leader> :ZoomWin<CR>
 
 " CTags
 map <Leader>rt :!ctags --extra=+f -R *<CR><CR>
@@ -87,6 +93,14 @@ map <Leader>te :tabe <C-R>=expand("%:p:h") . "/" <CR>
 " Command mode: Ctrl+P
 cmap <C-P> <C-R>=expand("%:p:h") . "/" <CR>
 
+" Unimpaired configuration
+" Bubble single lines
+nmap <C-Up> [e
+nmap <C-Down> ]e
+" Bubble multiple lines
+vmap <C-Up> [egv
+vmap <C-Down> ]egv
+
 " Use modeline overrides
 set modeline
 set modelines=10
@@ -99,5 +113,12 @@ if filereadable(expand("~/.vimrc.local"))
   source ~/.vimrc.local
 endif
 
-colorscheme vividchalk
+"colorscheme vividchalk
 map <Leader>p <C-^> " Go to previous file
+
+"Directories for swp files
+set backupdir=~/.vim/backup
+set directory=~/.vim/backup
+
+" xterm not recognized right by vim
+set term=builtin_ansi

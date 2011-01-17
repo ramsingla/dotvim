@@ -56,20 +56,21 @@ def vim_plugin_task(name, repo=nil)
           current = lines.shift until current =~ /finish$/ # find finish line
 
           while current = lines.shift
-            # first line is the filename, followed by some unknown data
-            file = current[/^(.+?)\s+\[\[\[(\d+)$/, 1]
+            # first line is the filename (possibly followed by garbage)
+            # some vimballs use win32 style path separators
+            path = current[/^(.+?)(\t\[{3}\d)?$/, 1].gsub '\\', '/'
 
             # then the size of the payload in lines
             current = lines.shift
             num_lines = current[/^(\d+)$/, 1].to_i
 
             # the data itself
-            data = lines.slice!(0, num_lines)
+            data = lines.slice!(0, num_lines).join
 
             # install the data
             Dir.chdir dir do
-              mkdir_p File.dirname(file)
-              File.open(file, 'w'){ |f| f.write(data) }
+              mkdir_p File.dirname(path)
+              File.open(path, 'w'){ |f| f.write(data) }
             end
           end
         end
@@ -119,35 +120,41 @@ def vim_plugin_task(name, repo=nil)
   task :default => name
 end
 
-vim_plugin_task "ack.vim",          "http://github.com/mileszs/ack.vim.git"
+vim_plugin_task "ack.vim",          "git://github.com/mileszs/ack.vim.git"
 vim_plugin_task "color-sampler",    "http://www.vim.org/scripts/download_script.php?src_id=12179"
 vim_plugin_task "conque",           "http://conque.googlecode.com/files/conque_1.1.tar.gz"
-vim_plugin_task "fugitive",         "http://github.com/tpope/vim-fugitive.git"
-vim_plugin_task "git",              "http://github.com/tpope/vim-git.git"
-vim_plugin_task "haml",             "http://github.com/tpope/vim-haml.git"
-vim_plugin_task "indent_object",    "http://github.com/michaeljsmith/vim-indent-object.git"
-vim_plugin_task "javascript",       "http://github.com/pangloss/vim-javascript.git"
-vim_plugin_task "markdown_preview", "http://github.com/robgleeson/vim-markdown-preview.git"
-vim_plugin_task "nerdtree",         "http://github.com/scrooloose/nerdtree.git"
-vim_plugin_task "nerdcommenter",    "http://github.com/scrooloose/nerdcommenter.git"
-vim_plugin_task "surround",         "http://github.com/tpope/vim-surround.git"
+vim_plugin_task "fugitive",         "git://github.com/tpope/vim-fugitive.git"
+vim_plugin_task "git",              "git://github.com/tpope/vim-git.git"
+vim_plugin_task "haml",             "git://github.com/tpope/vim-haml.git"
+vim_plugin_task "indent_object",    "git://github.com/michaeljsmith/vim-indent-object.git"
+vim_plugin_task "javascript",       "git://github.com/pangloss/vim-javascript.git"
+vim_plugin_task "jslint",           "git://github.com/hallettj/jslint.vim.git"
+vim_plugin_task "markdown_preview", "git://github.com/robgleeson/vim-markdown-preview.git"
+vim_plugin_task "nerdtree",         "git://github.com/wycats/nerdtree.git"
+vim_plugin_task "nerdcommenter",    "git://github.com/scrooloose/nerdcommenter.git"
+vim_plugin_task "surround",         "git://github.com/tpope/vim-surround.git"
 vim_plugin_task "taglist",          "http://vim.sourceforge.net/scripts/download_script.php?src_id=7701"
-vim_plugin_task "vividchalk",       "http://github.com/tpope/vim-vividchalk.git"
-vim_plugin_task "supertab",         "http://github.com/ervandew/supertab.git"
-vim_plugin_task "cucumber",         "http://github.com/tpope/vim-cucumber.git"
-vim_plugin_task "textile",          "http://github.com/timcharper/textile.vim.git"
-vim_plugin_task "rails",            "http://github.com/tpope/vim-rails.git"
-vim_plugin_task "rspec",            "http://github.com/taq/vim-rspec.git"
+vim_plugin_task "vividchalk",       "git://github.com/tpope/vim-vividchalk.git"
+vim_plugin_task "supertab",         "git://github.com/ervandew/supertab.git"
+vim_plugin_task "cucumber",         "git://github.com/tpope/vim-cucumber.git"
+vim_plugin_task "textile",          "git://github.com/timcharper/textile.vim.git"
+vim_plugin_task "rails",            "git://github.com/tpope/vim-rails.git"
+vim_plugin_task "rspec",            "git://github.com/taq/vim-rspec.git"
 vim_plugin_task "zoomwin",          "http://www.vim.org/scripts/download_script.php?src_id=9865"
-vim_plugin_task "snipmate",         "http://github.com/msanders/snipmate.vim.git"
-vim_plugin_task "autoclose",        "http://github.com/Townk/vim-autoclose.git"
-vim_plugin_task "markdown",         "http://github.com/tpope/vim-markdown.git"
+vim_plugin_task "snipmate",         "git://github.com/msanders/snipmate.vim.git"
+vim_plugin_task "delimitmate",      "git://github.com/Raimondi/delimitMate.git"
+vim_plugin_task "markdown",         "git://github.com/tpope/vim-markdown.git"
+vim_plugin_task "align",            "git://github.com/tsaleh/vim-align.git"
+vim_plugin_task "unimpaired",       "git://github.com/tpope/vim-unimpaired.git"
+vim_plugin_task "searchfold",       "git://github.com/vim-scripts/searchfold.vim.git"
+vim_plugin_task "irblack",          "git://github.com/wgibbs/vim-irblack.git"
 vim_plugin_task "scratch",          "http://github.com/duff/vim-scratch.git"
 
-vim_plugin_task "command_t",        "http://github.com/wincent/Command-T.git" do
+vim_plugin_task "command_t",        "git://github.com/wincent/Command-T.git" do
+
   sh "find ruby -name '.gitignore' | xargs rm"
   Dir.chdir "ruby/command-t" do
-    if `rvm > /dev/null 2>&1` && $?.exitstatus == 1
+    if `rvm > /dev/null 2>&1` && $?.exitstatus == 0
       sh "rvm system ruby extconf.rb"
     else
       sh "/usr/bin/ruby extconf.rb" # assume /usr/bin/ruby is system ruby
@@ -192,11 +199,6 @@ vim_plugin_task "mustasche" do
   sh "curl http://github.com/defunkt/mustache/raw/master/contrib/mustache.vim > syntax/mustache.vim"
 end
 
-desc "Cleanup all the files"
-task :clean do
-  rm_rf "tmp"
-end
-
 desc "Update the documentation"
 task :update_docs do
   puts "Updating VIM Documentation..."
@@ -213,7 +215,19 @@ task :link_vimrc do
   end
 end
 
+task :clean do
+  system "git clean -dfx"
+end
+
+task :pull do
+  system "git pull"
+end
+
 task :default => [
   :update_docs,
   :link_vimrc
 ]
+
+desc "Clear out all build artifacts and rebuild the latest Janus"
+task :upgrade => [:clean, :pull, :default]
+
