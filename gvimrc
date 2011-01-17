@@ -6,6 +6,7 @@ if has("gui_macvim")
   " Command-T for CommandT
   macmenu &File.New\ Tab key=<nop>
   map <D-t> :CommandT<CR>
+  imap <D-t> <Esc>:CommandT<CR>
 
   " Command-Shift-F for Ack
   macmenu Window.Toggle\ Full\ Screen\ Mode key=<nop>
@@ -16,6 +17,10 @@ if has("gui_macvim")
 
   " Command-/ to toggle comments
   map <D-/> <plug>NERDCommenterToggle<CR>
+
+  " Command-][ to increase/decrease indentation
+  vmap <D-]> >gv
+  vmap <D-[> <gv
 endif
 
 " Start without the toolbar
@@ -33,7 +38,19 @@ endfunction
 " Project Tree
 autocmd VimEnter * call s:CdIfDirectory(expand("<amatch>"))
 autocmd FocusGained * call s:UpdateNERDTree()
+autocmd WinEnter * call s:CloseIfOnlyNerdTreeLeft()
 
+" Close all open buffers on entering a window if the only
+" buffer that's left is the NERDTree buffer
+function s:CloseIfOnlyNerdTreeLeft()
+  if exists("t:NERDTreeBufName")
+    if bufwinnr(t:NERDTreeBufName) != -1
+      if winnr("$") == 1
+        q
+      endif
+    endif
+  endif
+endfunction
 
 " If the parameter is a directory, cd into it
 function s:CdIfDirectory(directory)
@@ -48,6 +65,10 @@ function s:CdIfDirectory(directory)
     NERDTree
     wincmd p
     bd
+  endif
+
+  if explicitDirectory
+    wincmd p
   endif
 endfunction
 
@@ -125,6 +146,11 @@ function Remove(file)
   call s:UpdateNERDTree()
 endfunction
 
+function Mkdir(file)
+  execute "!mkdir " . a:file
+  call s:UpdateNERDTree()
+endfunction
+
 function Edit(file)
   if exists("b:NERDTreeRoot")
     wincmd p
@@ -148,6 +174,7 @@ call s:DefineCommand("cd", "ChangeDirectory")
 call s:DefineCommand("touch", "Touch")
 call s:DefineCommand("rm", "Remove")
 call s:DefineCommand("e", "Edit")
+call s:DefineCommand("mkdir", "Mkdir")
 
 " Include user's local vim config
 if filereadable(expand("~/.gvimrc.local"))

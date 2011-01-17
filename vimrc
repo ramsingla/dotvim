@@ -108,11 +108,6 @@ set modelines=10
 " Default color scheme
 color desert
 
-" Include user's local vim config
-if filereadable(expand("~/.vimrc.local"))
-  source ~/.vimrc.local
-endif
-
 "colorscheme vividchalk
 map <Leader>p <C-^> " Go to previous file
 
@@ -122,3 +117,8 @@ set directory=~/.vim/backup
 
 " xterm not recognized right by vim
 set term=builtin_ansi
+
+" Include user's local vim config
+if filereadable(expand("~/.vimrc.local"))
+  source ~/.vimrc.local
+endif
