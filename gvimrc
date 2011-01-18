@@ -17,6 +17,10 @@ if has("gui_macvim")
   " Toggle NERDTree
   map <D-N> :NERDTreeToggle<CR>
   imap <D-N> <Esc>:NERDTreeToggle<CR>
+  " Close Buffer
+  macmenu &File.Close key=<nop>
+  map <D-w> :BD<CR>
+  imap <D-w> <Esc>:BD<CR>
 
   " Command-Shift-F for Ack
   macmenu Window.Toggle\ Full\ Screen\ Mode key=<nop>

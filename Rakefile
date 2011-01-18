@@ -155,6 +155,7 @@ vim_plugin_task "ragtag",           "git://github.com/tpope/vim-ragtag.git"
 vim_plugin_task "matchit",          "git://github.com/vim-scripts/matchit.zip.git"
 vim_plugin_task "tcomment",         "git://github.com/tsaleh/vim-tcomment.git"
 vim_plugin_task "easytags",         "git://github.com/vim-scripts/easytags.vim.git"
+vim_plugin_task "session",         "http://www.vim.org/scripts/download_script.php?src_id=14614"
 
 
 vim_plugin_task "command_t",        "git://github.com/wincent/Command-T.git" do
@@ -203,6 +204,10 @@ end
 
 vim_plugin_task "mustasche" do
   sh "curl http://github.com/defunkt/mustache/raw/master/contrib/mustache.vim > syntax/mustache.vim"
+end
+
+vim_plugin_task "bufkill" do
+  sh "curl http://www.vim.org/scripts/download_script.php?src_id=14660 > plugin/bufkill.vim"
 end
 
 desc "Update the documentation"
