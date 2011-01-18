@@ -36,6 +36,7 @@ let g:LustyJugglerSuppressRubyWarning = 1 " To suppress the ruby warning.
 
 " Ctags Commmand Required by taglist plugin
 let Tlist_Ctags_Cmd = '/usr/local/bin/ctags'
+let g:easytags_cmd = '/usr/local/bin/ctags'
 
 " Without setting this, ZoomWin restores windows in a way that causes
 " equalalways behavior to be triggered the next time CommandT is used.
