@@ -154,6 +154,8 @@ vim_plugin_task "vimrake",             "git://github.com/tpope/vim-rake.git"
 vim_plugin_task "ragtag",           "git://github.com/tpope/vim-ragtag.git"
 vim_plugin_task "matchit",          "git://github.com/vim-scripts/matchit.zip.git"
 vim_plugin_task "tcomment",         "git://github.com/tsaleh/vim-tcomment.git"
+vim_plugin_task "easytags",         "git://github.com/vim-scripts/easytags.vim.git"
+
 
 vim_plugin_task "command_t",        "git://github.com/wincent/Command-T.git" do
   sh "find ruby -name '.gitignore' | xargs rm"

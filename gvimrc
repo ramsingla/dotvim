@@ -7,10 +7,21 @@ if has("gui_macvim")
   macmenu &File.New\ Tab key=<nop>
   map <D-t> :CommandT<CR>
   imap <D-t> <Esc>:CommandT<CR>
+  " Command-Shift-T for Taglist
+  macmenu &File.Open\ Tab\.\.\. key=<nop>
+  map <D-T> :Tlist<CR>
+  imap <D-T> <Esc>:Tlist<CR>
+  " Reload Tags
+  map <D-R> :!ctags --extra=+f -R *<CR><CR>:TlistUpdate<CR>
+  imap <D-R> <Esc>:!ctags --extra=+f -R *<CR><CR>:TlistUpdate<CR>
+  " Toggle NERDTree
+  map <D-N> :NERDTreeToggle<CR>
+  imap <D-N> <Esc>:NERDTreeToggle<CR>
 
   " Command-Shift-F for Ack
   macmenu Window.Toggle\ Full\ Screen\ Mode key=<nop>
   map <D-F> :Ack<space>
+  imap <D-F> <Esc>:Ack<space>
 
   " Command-e for ConqueTerm
   map <D-e> :call StartTerm()<CR>
