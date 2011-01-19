@@ -150,12 +150,13 @@ vim_plugin_task "irblack",          "git://github.com/wgibbs/vim-irblack.git"
 vim_plugin_task "scratch",          "http://github.com/duff/vim-scratch.git"
 vim_plugin_task "lusty",            "git://github.com/sjbach/lusty.git"
 vim_plugin_task "specky",           "git://github.com/vim-scripts/Specky.git"
-vim_plugin_task "vimrake",             "git://github.com/tpope/vim-rake.git"
+vim_plugin_task "vimrake",          "git://github.com/tpope/vim-rake.git"
 vim_plugin_task "ragtag",           "git://github.com/tpope/vim-ragtag.git"
 vim_plugin_task "matchit",          "git://github.com/vim-scripts/matchit.zip.git"
 vim_plugin_task "tcomment",         "git://github.com/tsaleh/vim-tcomment.git"
 vim_plugin_task "easytags",         "git://github.com/vim-scripts/easytags.vim.git"
-vim_plugin_task "session",         "http://www.vim.org/scripts/download_script.php?src_id=14614"
+vim_plugin_task "session",          "http://www.vim.org/scripts/download_script.php?src_id=14614"
+vim_plugin_task "rubyrefactor",     "git://github.com/ecomba/vim-ruby-refactoring.git"
 
 
 vim_plugin_task "command_t",        "git://github.com/wincent/Command-T.git" do

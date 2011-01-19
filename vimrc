@@ -113,6 +113,9 @@ map <Leader>B :LustyBufferExplorer<CR>
 map <Leader>f :LustyFilesystemExplorer<CR>
 map <Leader>F :LustyFilesystemExplorerFromHere<CR>
 
+" Hide the highlighting of the last search term
+nnoremap <esc> :noh<return><esc>
+
 " Inserts the path of the currently edited file into a command
 " Command mode: Ctrl+P
 cmap <C-P> <C-R>=expand("%:p:h") . "/" <CR>
